@@ -83,7 +83,7 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     noteFormRef.current.toggleVisibility()
-    
+
     blogService.create(blogObject).then(returnedBlog => {
       setBlogs(blogs.concat(returnedBlog))
 
@@ -115,11 +115,12 @@ const App = () => {
     )
   }
 
- const BlogFormTogglable = () => (
-  <Togglable buttonLabel="create new blog" ref={noteFormRef}>
-    <BlogAdditionForm createBlog={addBlog} />
-  </Togglable>
-)
+  const BlogFormTogglable = () => (
+    <Togglable buttonLabel="create new blog" ref={noteFormRef}>
+      <BlogAdditionForm createBlog={addBlog} />
+    </Togglable>
+  )
+
 
   return (
     <div>
