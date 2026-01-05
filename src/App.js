@@ -5,7 +5,7 @@ import loginService from './services/login'
 import Notification from './components/notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
-import BlogForm from './components/BlogForm'
+import BlogAdditionForm from './components/BlogAdditionForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -113,8 +113,8 @@ const App = () => {
   }
 
  const BlogFormTogglable = () => (
-  <Togglable buttonLabel="new blog">
-    <BlogForm createBlog={addBlog} />
+  <Togglable buttonLabel="create new blog">
+    <BlogAdditionForm createBlog={addBlog} />
   </Togglable>
 )
 
