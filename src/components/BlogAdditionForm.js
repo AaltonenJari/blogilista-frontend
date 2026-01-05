@@ -18,7 +18,7 @@ const BlogAdditionForm = ({ createBlog }) => {
     setUrl('')
   }
 
-    return (
+  return (
     <div>
       <h2>Create new</h2>
       <form onSubmit={addBlog}>
