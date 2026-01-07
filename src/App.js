@@ -135,6 +135,31 @@ const App = () => {
       })
   }
 
+  const deleteBlog = (id) => {
+    blogService.remove(id)
+      .then(() => {
+        setBlogs(blogs.filter(b => b.id !== id))
+
+        const notificationMessage = `blog deleted`
+        setNotificationMessage(notificationMessage)
+        setNotificationStatus('ok')
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationStatus(null)
+        }, 5000)
+      })
+      .catch(error => {
+        const notificationMessage = `error deleting blog: ${error.response && error.response.data && error.response.data.error ? error.response.data.error : error.message}`
+        console.log(notificationMessage)
+        setNotificationMessage(notificationMessage)
+        setNotificationStatus('error')
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationStatus(null)
+        }, 5000)
+      })
+  }
+
   if (user === null) {
     return (
       <div>
@@ -170,7 +195,9 @@ const App = () => {
         <Blog 
           key={blog.id} 
           blog={blog}
+          userid={user.id}
           increaseLikes={() => increaseLikesOf(blog.id)}
+          deleteBlog={deleteBlog}
         />
       )}
     </div>
