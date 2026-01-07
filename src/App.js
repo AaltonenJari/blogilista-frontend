@@ -107,6 +107,34 @@ const App = () => {
     })   
   }
 
+   const increaseLikesOf = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
+
+    blogService.update(id, updatedBlog)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(n => n.id !== id ? n : returnedBlog))
+
+        const notificationMessage = `liked blog ${returnedBlog.title} by ${returnedBlog.author}`
+        setNotificationMessage(notificationMessage)
+        setNotificationStatus('ok')
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationStatus(null)
+        }, 5000)
+      })
+      .catch(error => {
+        const notificationMessage = `error updating likes: ${error.response && error.response.data && error.response.data.error ? error.response.data.error : error.message}`
+        console.log(notificationMessage)
+        setNotificationMessage(notificationMessage)
+        setNotificationStatus('error')
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationStatus(null)
+        }, 5000)
+      })
+  }
+
   if (user === null) {
     return (
       <div>
@@ -137,7 +165,11 @@ const App = () => {
       <BlogFormTogglable />
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog 
+          key={blog.id} 
+          blog={blog}
+          increaseLikes={() => increaseLikesOf(blog.id)}
+        />
       )}
     </div>
   )
