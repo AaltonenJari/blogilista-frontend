@@ -38,3 +38,28 @@ test('shows url, likes and user after clicking view button', async () => {
   expect(container).toHaveTextContent('5')
   expect(container).toHaveTextContent('Test User')
 })
+
+test('like button calls event handler twice when clicked twice', async () => {
+  const blog = {
+    title: 'Component testing is done with react-testing-library',
+    author: 'Test Author',
+    url: 'http://example.com',
+    likes: 5,
+    user: {
+      id: '123',
+      name: 'Test User'
+    }
+  }
+
+  const mockHandler = vi.fn()
+
+  render(<Blog blog={blog} increaseLikes={mockHandler} />)
+
+  const user = userEvent.setup()
+  await user.click(screen.getByText('view'))
+  const likeButton = screen.getByText('like')
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(mockHandler).toHaveBeenCalledTimes(2)
+})
