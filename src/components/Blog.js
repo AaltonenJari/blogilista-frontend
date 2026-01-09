@@ -8,7 +8,7 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
+
   const [visible, setVisible] = useState(false)
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -28,9 +28,9 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
       deleteBlog(blog.id)
     }
   }
-  
-  const deleteButtonVisible = { display: blog.user && blog.user.id === userid ? '' : 'none' } 
-  
+
+  const deleteButtonVisible = { display: blog.user && blog.user.id === userid ? '' : 'none' }
+
   return (
     <div style={blogStyle}>
       <div>
@@ -48,7 +48,7 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
           remove
         </button>
       </div>
-    </div>  
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ import BlogAdditionForm from './components/BlogAdditionForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')  
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState(null)
@@ -19,33 +19,33 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
-    if (loggedUserJSON) {      
+    if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
     }
   }, [])
 
-  const handleLogin = async event => {    
+  const handleLogin = async event => {
     event.preventDefault()
-    try {      
+    try {
       const user = await loginService.login({ username, password })
 
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
-      ) 
+      )
 
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch {
-      const notificationMessage = `wrong username or password`
+      const notificationMessage = 'wrong username or password'
       console.log(notificationMessage)
       setNotificationMessage(notificationMessage)
       setNotificationStatus('error')
@@ -95,19 +95,19 @@ const App = () => {
         setNotificationStatus(null)
       }, 5000)
     })
-    .catch(error => {
-      const notificationMessage = `error creating blog: ${error.response.data.error}`
-      console.log(notificationMessage)
-      setNotificationMessage(notificationMessage)
-      setNotificationStatus('error')
-      setTimeout(() => {
-        setNotificationMessage(null)
-        setNotificationStatus(null)
-      }, 5000)
-    })   
+      .catch(error => {
+        const notificationMessage = `error creating blog: ${error.response.data.error}`
+        console.log(notificationMessage)
+        setNotificationMessage(notificationMessage)
+        setNotificationStatus('error')
+        setTimeout(() => {
+          setNotificationMessage(null)
+          setNotificationStatus(null)
+        }, 5000)
+      })
   }
 
-   const increaseLikesOf = (id) => {
+  const increaseLikesOf = (id) => {
     const blog = blogs.find(b => b.id === id)
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
 
@@ -140,7 +140,7 @@ const App = () => {
       .then(() => {
         setBlogs(blogs.filter(b => b.id !== id))
 
-        const notificationMessage = `blog deleted`
+        const notificationMessage = 'blog deleted'
         setNotificationMessage(notificationMessage)
         setNotificationStatus('ok')
         setTimeout(() => {
@@ -192,8 +192,8 @@ const App = () => {
       blogs sorted by likes
       <br /><br />
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog 
-          key={blog.id} 
+        <Blog
+          key={blog.id}
           blog={blog}
           userid={user.id}
           increaseLikes={() => increaseLikesOf(blog.id)}
