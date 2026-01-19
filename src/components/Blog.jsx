@@ -16,8 +16,8 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
 
   if (!visible) {
     return (
-      <div style={blogStyle}>
-        {blog.title} {blog.author}
+      <div style={blogStyle} data-testid="blog">
+        <span className="blog-title">{blog.title}</span> {blog.author}
         <button onClick={toggleVisibility}>view</button>
       </div>
     )
@@ -32,7 +32,7 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   const deleteButtonVisible = { display: blog.user && blog.user.id === userid ? '' : 'none' }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} data-testid="blog">
       <div>
         <span className="blog-title">{blog.title}</span> {blog.author}
         <button onClick={toggleVisibility}>hide</button>
