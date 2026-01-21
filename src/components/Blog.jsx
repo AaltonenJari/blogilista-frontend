@@ -16,7 +16,7 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
 
   if (!visible) {
     return (
-      <div style={blogStyle} data-testid="blog">
+      <div style={blogStyle} data-testid={`blog-${blog.id}`}>
         <span className="blog-title">{blog.title}</span> {blog.author}
         <button onClick={toggleVisibility}>view</button>
       </div>
@@ -32,15 +32,15 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   const deleteButtonVisible = { display: blog.user && blog.user.id === userid ? '' : 'none' }
 
   return (
-    <div style={blogStyle} data-testid="blog">
+    <div style={blogStyle} data-testid={`blog-${blog.id}`}>
       <div>
         <span className="blog-title">{blog.title}</span> {blog.author}
         <button onClick={toggleVisibility}>hide</button>
       </div>
       {blog.url} <br />
       <div>
-        likes {blog.likes}
-        <button onClick={increaseLikes}>like</button>
+        <span data-testid={`likes-${blog.id}`}>likes {blog.likes}</span>
+        <button onClick={increaseLikes} data-testid={`like-${blog.id}`}>like</button>
       </div>
       {blog.user.name}
       <div style={deleteButtonVisible}>
