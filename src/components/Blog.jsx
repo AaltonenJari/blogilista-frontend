@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   const blogStyle = {
@@ -10,10 +10,6 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   }
 
   const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    setVisible(true)
-  }, [])
 
   const toggleVisibility = () => {
     setVisible(!visible)
