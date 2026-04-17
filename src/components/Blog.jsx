@@ -12,7 +12,7 @@ const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    setVisible(true)
+    setVisible(false)
   }, [])
 
   const toggleVisibility = () => {

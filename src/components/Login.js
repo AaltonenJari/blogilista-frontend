@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
-import Togglable from './Togglable'
 import LoginForm from './LoginForm'
-import Notification from './notification'
 
 const Login = ({ setUser })  => {
   const [username, setUsername] = useState('')
@@ -34,16 +32,14 @@ const Login = ({ setUser })  => {
 
   return (
     <div>
-      <Togglable buttonLabel='login'>
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-          notificationMessage={notificationMessage}
-        />
-      </Togglable>
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}
+        notificationMessage={notificationMessage}
+      />
     </div>
   )
 }

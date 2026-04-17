@@ -1,15 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import blogService from '../services/blogs'
 import Notification from './notification'
 import Blog from './Blog'
-import BlogAdditionForm from './BlogAdditionForm'
-import Togglable from './Togglable'
 
 const BlogList = (user) => {
   const [blogs, setBlogs] = useState([])
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationStatus, setNotificationStatus] = useState(null)
-  const noteFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -44,6 +41,7 @@ const BlogList = (user) => {
       })
   }
 
+  /*
   const addBlog = (blogObject) => {
     noteFormRef.current.toggleVisibility()
 
@@ -68,7 +66,7 @@ const BlogList = (user) => {
         }, 5000)
       })
   }
-
+*/
 
   const deleteBlog = (id) => {
     blogService.remove(id)
@@ -94,23 +92,17 @@ const BlogList = (user) => {
       })
   }
 
-  const BlogFormTogglable = () => (
-    <Togglable buttonLabel="create new blog" ref={noteFormRef}>
-      <BlogAdditionForm createBlog={addBlog} />
-    </Togglable>
-  )
-
+  const userId = user.user ? user.user.id : 0
   return (
     <div>
       <h2>blogs</h2>
       <Notification status={notificationStatus} message={notificationMessage} />
-      <BlogFormTogglable />
 
       {[...blogs].sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog
           key={blog.id}
           blog={blog}
-          userid={user.user.id}
+          userid={userId}
           increaseLikes={() => increaseLikesOf(blog.id)}
           deleteBlog={deleteBlog}
         />

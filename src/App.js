@@ -3,6 +3,10 @@ import blogService from './services/blogs'
 import Login from './components/Login'
 import BlogList from './components/BlogList'
 import Notification from './components/notification'
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link, Navigate
+} from 'react-router-dom'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -21,7 +25,11 @@ const App = () => {
     setUser(null)
   }
 
+  const padding = {
+    padding: 5
+  }
 
+  /*
   if (user === null) {
     return (
       <div>
@@ -29,22 +37,39 @@ const App = () => {
       </div>
     )
   }
-
+*/
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <Router>
+      <div>
+        <Link style={padding} to="/">blogs</Link>
+
+        {!user && (
+          <Link style={padding} to="/login">login</Link>
+        )}
+
+        {user && (
+          <span style={padding}>
+            <button onClick={() => handleLogout()}>logout</button>
+          </span>
+        )}
+      </div>
+
       <Notification />
-      <form onSubmit={handleLogout}>
-        <p>
-          {user.name} logged in
-          <button type="submit">logout</button>
-        </p>
-      </form>
 
-      <BlogList user={user} />
+      <Routes>
+        <Route path="/" element={<BlogList user={user} />} />
 
-    </div>
+        <Route
+          path="/login"
+          element={
+            user
+              ? <Navigate to="/" />   // jos kirjautunut → pois login-sivulta
+              : <Login setUser={setUser} />
+          }
+        />
+      </Routes>
+    </Router>
   )
 }
 
