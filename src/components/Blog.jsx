@@ -1,15 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-const Blog = ({ blogs, userid, increaseLikes, deleteBlog }) => {
+const Blog = ({ blog, userid, increaseLikes, deleteBlog }) => {
   const navigate = useNavigate()
-  const id = useParams().id
-  const blog = blogs.find(b => b.id === id)
+  const { id } = useParams()
 
   if (!blog) return null
 
   const handleDelete = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      deleteBlog(blog.id)
+      deleteBlog(id)
       navigate('/')
     }
   }
@@ -17,14 +16,14 @@ const Blog = ({ blogs, userid, increaseLikes, deleteBlog }) => {
   const userActionButtonVisible = { display: blog.user && blog.user.id === userid ? '' : 'none' }
 
   return (
-    <div data-testid={`blog-${blog.id}`}>
+    <div data-testid={`blog-${id}`}>
       <h1>{blog.author}: {blog.title}</h1>
       <a href={blog.url} target="_blank" rel="noopener noreferrer">{blog.url}</a>
 
       <div>
-        <span data-testid={`likes-${blog.id}`}>likes {blog.likes}</span>
+        <span data-testid={`likes-${id}`}>likes {blog.likes}</span>
         <span style={userActionButtonVisible}>
-          <button onClick={() => increaseLikes(blog.id)} data-testid={`like-${blog.id}`}>like</button>
+          <button onClick={() => increaseLikes(id)} data-testid={`like-${id}`}>like</button>
         </span>
       </div>
       <span>Added by {blog.user.name}</span>

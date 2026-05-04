@@ -4,8 +4,8 @@ import Login from './components/Login'
 import BlogList from './components/BlogList'
 import Notification from './components/notification'
 import {
-  BrowserRouter as Router,
-  Routes, Route, Link, Navigate
+  Routes, Route, Link, Navigate,
+  useMatch, useNavigate
 } from 'react-router-dom'
 import Blog from './components/Blog'
 
@@ -14,6 +14,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationStatus, setNotificationStatus] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -64,6 +65,7 @@ const App = () => {
           setNotificationStatus(null)
         }, 5000)
       })
+    navigate('/')
   }
 
   /*
@@ -118,8 +120,13 @@ const App = () => {
       })
   }
 
+  const match = useMatch('/blogs/:id')
+  const blog = match
+    ? blogs.find(b => b.id === match.params.id)
+    : null
+
   return (
-    <Router>
+    <div>
       <div>
         <Link style={padding} to="/">blogs</Link>
 
@@ -141,7 +148,7 @@ const App = () => {
           path="/blogs/:id"
           element={
             <Blog
-              blogs={blogs}
+              blog={blog}
               userid={user?.id}
               increaseLikes={increaseLikesOf}
               deleteBlog={deleteBlog}
@@ -159,7 +166,7 @@ const App = () => {
           }
         />
       </Routes>
-    </Router>
+    </div>
   )
 }
 
