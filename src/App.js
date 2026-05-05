@@ -66,7 +66,6 @@ const App = () => {
           setNotificationStatus(null)
         }, 5000)
       })
-    navigate('/')
   }
 
   const addBlog = (blogObject) => {
@@ -116,6 +115,7 @@ const App = () => {
           setNotificationStatus(null)
         }, 5000)
       })
+    navigate('/')
   }
 
   const match = useMatch('/blogs/:id')
