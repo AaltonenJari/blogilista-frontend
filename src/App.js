@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import Blog from './components/Blog'
 import BlogAdditionForm from './components/BlogAdditionForm'
-import { Container } from '@mui/material'
+import { Button, Container, AppBar, Toolbar, Box, Typography } from '@mui/material'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -124,22 +124,40 @@ const App = () => {
     ? blogs.find(b => b.id === match.params.id)
     : null
 
+  const style = { '&:hover': { bgcolor: 'rgba(255,255,255,0.3)' } }
+
   return (
     <Container>
-      <div>
-        <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/create">new blog</Link>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" style={padding}>
+            Blog App
+          </Typography>
 
-        {!user && (
-          <Link style={padding} to="/login">login</Link>
-        )}
+          <Box sx={{ ml: 'auto' }}>
+            <Button color="inherit" component={Link} to="/" sx={style}>
+              Blogs
+            </Button>
+            <Button color="inherit" component={Link} to="/create" sx={style}>
+              New Blog
+            </Button>
 
-        {user && (
-          <span style={padding}>
-            <button onClick={() => handleLogout()}>logout</button>
-          </span>
-        )}
-      </div>
+            {!user && (
+              <Button color="inherit" component={Link} to="/login" sx={style}>
+                Login
+              </Button>
+            )}
+
+            {user && (
+              <span style={padding}>
+                <Button color="inherit" onClick={() => handleLogout()} sx={style}>
+                  Logout
+                </Button>
+              </span>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
 
       <Notification status={notificationStatus} message={notificationMessage} />
 
