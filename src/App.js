@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 import Blog from './components/Blog'
 import BlogAdditionForm from './components/BlogAdditionForm'
+import { Container } from '@mui/material'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -124,10 +125,10 @@ const App = () => {
     : null
 
   return (
-    <div>
+    <Container>
       <div>
         <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/new">new blog</Link>
+        <Link style={padding} to="/create">new blog</Link>
 
         {!user && (
           <Link style={padding} to="/login">login</Link>
@@ -155,7 +156,7 @@ const App = () => {
           }
         />
         <Route path="/" element={<BlogList blogList={blogs} />} />
-        <Route path="/new" element={user ? <BlogAdditionForm createBlog={addBlog} /> : <Navigate to="/login" />} />
+        <Route path="/create" element={user ? <BlogAdditionForm createBlog={addBlog} /> : <Navigate to="/login" />} />
 
         <Route
           path="/login"
@@ -166,7 +167,7 @@ const App = () => {
           }
         />
       </Routes>
-    </div>
+    </Container>
   )
 }
 
